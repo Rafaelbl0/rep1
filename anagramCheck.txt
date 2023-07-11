@@ -1,0 +1,26 @@
+import com.google.common.collect.MultiSet;
+String prepare(String source) { //to not consider special characters and make it case insensitive
+    return source.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+}
+boolean isAnagram(String string1, String string2) {
+    if (string1.length() != string2.length()) { //basic condition
+        return false;
+    }
+    Multiset<Character> multiset1 = HashMultiset.create();
+    Multiset<Character> multiset2 = HashMultiset.create();
+    string1 = prepare(string1);
+    string2 = prepare(string2);    
+    for (int i = 0; i < string1.length(); i++) {
+        multiset1.add(string1.charAt(i));
+        multiset2.add(string2.charAt(i));
+    }
+    return multiset1.equals(multiset2);
+}
+ @Test  
+  public void testIsAnagram() {  
+     assertTrue(isAnagram("amam", "Mama"));
+     assertFalse(isAnagram("aaaa", "aaa"));
+     assertFalse(isAnagram("ammm", "Mama"));
+     assertTrue(isAnagram("  ]", ""));
+     assertFalse(isAnagram("121", "212"));
+  }  
